@@ -1,6 +1,3 @@
-Certainly! Here’s an updated README with a more detailed description of the contract and a table of contents.
-
----
 
 # Spacebear ERC721 Token
 
