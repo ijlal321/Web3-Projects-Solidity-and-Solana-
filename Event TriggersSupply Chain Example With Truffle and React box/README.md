@@ -1,6 +1,3 @@
-Here's an updated `README.md` without the contract code, including the new sections and details:
-
----
 
 # Supply Chain Management System
 
