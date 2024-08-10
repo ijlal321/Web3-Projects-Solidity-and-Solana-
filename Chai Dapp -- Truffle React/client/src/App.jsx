@@ -43,7 +43,7 @@ function App() {
 
     const init = async () => {
       try {
-        if (typeof window.ethereum !== 'undefined') {
+        if (window.ethereum) {
           web3 = new Web3(window.ethereum)
           const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
           setAccounts(account);
