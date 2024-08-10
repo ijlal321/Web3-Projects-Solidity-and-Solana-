@@ -8,11 +8,6 @@
         "distDir": "Chai Dapp -- Truffle React/client/build"
       }
     }
-  ],
-  "routes": [
-    {
-      "src": "/chai-dapp/(.*)",
-      "dest": "/Chai Dapp -- Truffle React/client/$1"
-    }
+  ]
   ]
 }
