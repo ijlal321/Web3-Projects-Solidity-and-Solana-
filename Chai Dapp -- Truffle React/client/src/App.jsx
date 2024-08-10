@@ -16,7 +16,7 @@ function App() {
 
 
   const buyChai = async (name, message, amount) => {
-    if (! windows.ethereum){
+    if (window.ethereum == undefined){
       alert("install metamask first");
       return;
     }
