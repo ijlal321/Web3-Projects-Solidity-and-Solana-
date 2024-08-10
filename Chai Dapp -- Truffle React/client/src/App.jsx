@@ -55,6 +55,9 @@ function App() {
             window.location.reload()
           })
         }
+        else{
+          throw("metamask not installed");
+        }
       }
       catch (error) {
         console.log(error);
