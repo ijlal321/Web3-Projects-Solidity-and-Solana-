@@ -1,0 +1,11 @@
+{
+  "projects": [
+    {
+      "src": "Chai Dapp -- Truffle React/client/",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "Chai Dapp -- Truffle React/client/build"
+      }
+    }
+  ]
+}
