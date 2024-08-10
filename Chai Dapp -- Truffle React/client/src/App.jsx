@@ -61,7 +61,7 @@ function App() {
       }
       catch (error) {
         console.log(error);
-        // alert("install metamask plz");
+        alert("install metamask plz");
       }
     }
     init();
