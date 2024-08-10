@@ -81,8 +81,8 @@ function App() {
     <div >
       <img src={"https://chaicodeeater.netlify.app/assets/chai-a8e14337.png"} className="img-fluid" alt=".." width="100%" />
       <p style={{ marginTop: "10px", marginLeft: "5px" }}>
-        <small>Connected Account - {accounts[0]}</small>
-        <small>Contract deployed on Seoplia Network on address - {myChai.networks[11155111].address}</small>
+        <p style={{fontSize:"1rem", textAlign:"center"}}>Connected Account - <b>{chaiContract ? accounts[0]: "Not Connected"} </b></p>
+        <p style={{fontSize:"1rem", textAlign:"center"}}>Contract deployed on Seoplia Network on address - <b>{myChai.networks[11155111].address} </b></p>
       </p>
 
       <Buy buyChai={buyChai} chaiPrice={chaiPrice} />
