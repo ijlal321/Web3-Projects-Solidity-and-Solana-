@@ -2,9 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "Chai Dapp -- Truffle React/client",
-      "dest": "chai-dapp",  // Custom output directory for better organization
-      "command": "npm run build"  // Assuming your build command in package.json
+      "src": "Chai Dapp -- Truffle React/client/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "Chai Dapp -- Truffle React/client/build"
+      }
     }
   ]
 }
