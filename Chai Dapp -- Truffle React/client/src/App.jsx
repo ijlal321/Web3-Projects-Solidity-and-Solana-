@@ -16,6 +16,10 @@ function App() {
 
 
   const buyChai = async (name, message, amount) => {
+    if (! windows.ethereum){
+      alert("install metamask first");
+      return;
+    }
     try {
       const transaction = await chaiContract.methods.buyChai(name, message).send({
         from: accounts[0],
