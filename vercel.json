@@ -1,0 +1,10 @@
+{
+  "projects": [
+    {
+      "name": "Chai-Project",
+      "src": "Chai Dapp -- Truffle React\client",
+      "buildCommand": "npm run build",
+      "outputDirectory": "build"
+    }
+  ]
+}
