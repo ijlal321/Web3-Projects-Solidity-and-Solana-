@@ -9,12 +9,26 @@
 #outer-container{
   width: 20%;
   border: solid black 2px;
+  position: relative;
 }
 
 #fruit{
-  width: 80%;
+  width: 100%;
 }
 
-option{
-  width: 50px;
+
+
+.hidden-copy{
+  position: absolute;
+  top: 1rem;
+  right: -10%;
+}
+
+.hidden-copy{
+  transition: opacity 1s ease-in-out;
+}
+
+.hidden-copy > *{
+  margin: 0px;
+  font-size: 10px;
 }
