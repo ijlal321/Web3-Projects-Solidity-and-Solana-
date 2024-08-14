@@ -1,30 +1,12 @@
-const hre = require("hardhat");
-const fs = require("fs/promises");
+const { buildModule } = require("@nomicfoundation/hardhat-ignition/modules");
 
-async function main() {
-  const BankAccount = await hre.ethers.getContractFactory("BankAccount");
-  const bankAccount = await BankAccount.deploy();
+module.exports = buildModule("BankAccountModule", (m) => {
 
-  await bankAccount.deployed();
-  await writeDeploymentInfo(bankAccount);
-}
+  const bankAccount = m.contract("BankAccount");
 
-async function writeDeploymentInfo(contract) {
-  const data = {
-    contract: {
-      address: contract.address,
-      signerAddress: contract.signer.address,
-      abi: contract.interface.format(),
-    },
-  };
-
-  const content = JSON.stringify(data, null, 2);
-  await fs.writeFile("deployment.json", content, { encoding: "utf-8" });
-}
-
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
+  return { bankAccount };
 });
+
+
+// deployed on address 
+// 0xf03F6E2c37a7F9F8034dD062B0Be3d95d43F67A9
