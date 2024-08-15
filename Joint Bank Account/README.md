@@ -7,6 +7,7 @@ The `BankAccount` smart contract is a multi-owner bank account system that allow
 **Deployed Network:** Sepolia  
 **Contract Address:** `0xf03F6E2c37a7F9F8034dD062B0Be3d95d43F67A9`
 
+**See Live Version:** [Live Preview](https://ijlal321.github.io/Web3-Projects-Solidity-and-Solana-/Joint%20Bank%20Account/client/dist/)
 ## Features
 
 - **Multi-Owner Accounts:** Each account can have up to 4 owners.
@@ -77,4 +78,3 @@ The specified amount of Ether is transferred to the requester's address, and the
 
 The `BankAccount` contract provides a secure and collaborative way for multiple users to manage shared funds on the Ethereum blockchain. With its multi-owner approval system, it ensures that funds can only be withdrawn with consensus among account owners, enhancing security and trust.
 
-**See Live Version:** [abc.com](http://abc.com)
