@@ -11894,60 +11894,15 @@
     "version": "0.8.20+commit.a1b79de6.Emscripten.clang"
   },
   "networks": {
-    "5777": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event"
-        },
-        "0xa4035636e99f06b7651a604c1019fa4e8779fe68ef27eeb74dff2de348f6199b": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "step",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "address",
-              "name": "_address",
-              "type": "address"
-            }
-          ],
-          "name": "SupplyChainStep",
-          "type": "event"
-        }
-      },
+    "11155111": {
+      "events": {},
       "links": {},
-      "address": "0xE9faCcf5011cdc9a5e802B0F23FB1ff523C52e9f",
-      "transactionHash": "0x9500a8c1a24a8e92713f1cbc58cbaa8a12c92d20cf0eee0fba4a217be5ecbf51"
+      "address": "0x06b1Faf3Ef6A51a1986BbdcA974425f74917E95f",
+      "transactionHash": "0xc19380d0ce1f51f90f4281e1ba7e0a6771b39768d0e844eafee142c82ca1f4dd"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-08-06T14:46:57.076Z",
+  "updatedAt": "2024-08-15T07:43:14.787Z",
   "networkType": "ethereum",
   "devdoc": {
     "errors": {
