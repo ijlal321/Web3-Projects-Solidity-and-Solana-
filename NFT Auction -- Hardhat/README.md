@@ -1,6 +1,10 @@
-# BlockchainExpert - NFT Auction
+# NFT Auction
 
 This project provides a ERC721 smart contract that allows you to mint unique NFTs. It also provides an auction contract that allows users to auction of their NFTs.
+
+## Front-End Preview
+
+Check out the front-end preview [here](https://ijlal321.github.io/Web3-Projects-Solidity-and-Solana-/NFT%20Auction%20--%20Hardhat/frontend/).
 
 ## Getting Started
 
