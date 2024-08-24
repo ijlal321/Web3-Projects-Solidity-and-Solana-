@@ -30,7 +30,8 @@ contract VotingSystem is Ownable {
 
     mapping(uint256 => Organization) public Organizations;
     mapping(address => bool) public existingOwners;
-    mapping(uint256 => mapping(uint256 => mapping(address => uint))) public VotesRecord; // 0 means not voted yet
+    mapping(uint256 => mapping(uint256 => mapping(address => uint)))
+        public VotesRecord; // 0 means not voted yet
     //   0                  0                  0x0000      0
 
     uint256 public nextOrgId;
@@ -77,10 +78,14 @@ contract VotingSystem is Ownable {
         _;
     }
 
-    modifier isMemberofOrganization(uint organizationId){
+    modifier isMemberofOrganization(uint organizationId) {
         bool isMember = false;
-        for(uint i = 0; i < Organizations[organizationId].members.length; i++){
-            if (Organizations[organizationId].members[i] == msg.sender){
+        for (
+            uint i = 0;
+            i < Organizations[organizationId].members.length;
+            i++
+        ) {
+            if (Organizations[organizationId].members[i] == msg.sender) {
                 isMember = true;
                 break;
             }
@@ -89,10 +94,14 @@ contract VotingSystem is Ownable {
         _;
     }
 
-    modifier isNotMemberofOrganization(uint organizationId){
+    modifier isNotMemberofOrganization(uint organizationId) {
         bool isMember = false;
-        for(uint i = 0; i < Organizations[organizationId].members.length; i++){
-            if (Organizations[organizationId].members[i] == msg.sender){
+        for (
+            uint i = 0;
+            i < Organizations[organizationId].members.length;
+            i++
+        ) {
+            if (Organizations[organizationId].members[i] == msg.sender) {
                 isMember = true;
                 break;
             }
@@ -101,25 +110,49 @@ contract VotingSystem is Ownable {
         _;
     }
 
-    modifier OrganizationActive(uint OrganizationId){
-        require(Organizations[OrganizationId].status == organizationStatus.approved, "Organization is not approved");
+    modifier OrganizationActive(uint OrganizationId) {
+        require(
+            Organizations[OrganizationId].status == organizationStatus.approved,
+            "Organization is not approved"
+        );
         _;
     }
 
-    modifier VoteActive(uint OrganizationId, uint voteId){
-        require(Organizations[OrganizationId].votes.length > voteId, "Vote Id not valid");
-        require(Organizations[OrganizationId].votes[voteId].endDate > block.timestamp , "Vote has been finished");   
+    modifier VoteActive(uint OrganizationId, uint voteId) {
+        require(
+            Organizations[OrganizationId].votes.length > voteId,
+            "Vote Id not valid"
+        );
+        require(
+            Organizations[OrganizationId].votes[voteId].endDate >
+                block.timestamp,
+            "Vote has been finished"
+        );
         _;
     }
 
-    modifier validVoteOption(uint OrganizationId, uint voteId, uint optionNr){
-        require(optionNr != 0, "0 means vote not selected, once selected cannot be changed");
-        require(Organizations[OrganizationId].votes[voteId].options.length >= optionNr, "invalid option Index");
+    modifier validVoteOption(
+        uint OrganizationId,
+        uint voteId,
+        uint optionNr
+    ) {
+        require(
+            optionNr != 0,
+            "0 means vote not selected, once selected cannot be changed"
+        );
+        require(
+            Organizations[OrganizationId].votes[voteId].options.length >=
+                optionNr,
+            "invalid option Index"
+        );
         _;
     }
 
-    modifier OrganizationExists(uint organizationId){
-        require(organizationId < nextOrgId, "Organization with this Id does not exist");
+    modifier OrganizationExists(uint organizationId) {
+        require(
+            organizationId < nextOrgId,
+            "Organization with this Id does not exist"
+        );
         _;
     }
 
@@ -159,7 +192,7 @@ contract VotingSystem is Ownable {
         uint OrganizationId,
         uint voteId,
         uint optionNr
-    ) 
+    )
         public
         OrganizationExists(OrganizationId)
         isMemberofOrganization(OrganizationId)
@@ -170,32 +203,54 @@ contract VotingSystem is Ownable {
         VotesRecord[OrganizationId][voteId][msg.sender] = optionNr;
     }
 
-    function approveOrganization(uint OrganizationId) public onlyOwner 
-        OrganizationExists(OrganizationId)
-    {
-        require(Organizations[OrganizationId].status == organizationStatus.notApproved, "only unapproved organization is approved");
+    function approveOrganization(
+        uint OrganizationId
+    ) public onlyOwner OrganizationExists(OrganizationId) {
+        require(
+            Organizations[OrganizationId].status ==
+                organizationStatus.notApproved,
+            "only unapproved organization is approved"
+        );
         Organizations[OrganizationId].status = organizationStatus.approved;
     }
 
-    function BanOrganization(uint OrganizationId) public onlyOwner 
-        OrganizationExists(OrganizationId)
-    {
-        require(Organizations[OrganizationId].status != organizationStatus.notApproved, "unapproved organization cannot be banned");
+    function BanOrganization(
+        uint OrganizationId
+    ) public onlyOwner OrganizationExists(OrganizationId) {
+        require(
+            Organizations[OrganizationId].status !=
+                organizationStatus.notApproved,
+            "unapproved organization cannot be banned"
+        );
         Organizations[OrganizationId].status = organizationStatus.banned;
     }
 
-    function unBanOrganization(uint OrganizationId) public onlyOwner 
-        OrganizationExists(OrganizationId)
-    {
-        require(Organizations[OrganizationId].status == organizationStatus.banned, "only banned organization can be unBanned");
+    function unBanOrganization(
+        uint OrganizationId
+    ) public onlyOwner OrganizationExists(OrganizationId) {
+        require(
+            Organizations[OrganizationId].status == organizationStatus.banned,
+            "only banned organization can be unBanned"
+        );
         Organizations[OrganizationId].status = organizationStatus.approved;
     }
 
-    function becomeMember(uint OrganizationId) public OrganizationExists(OrganizationId) OrganizationActive(OrganizationId) isNotMemberofOrganization(OrganizationId){
+    function becomeMember(
+        uint OrganizationId
+    )
+        public
+        OrganizationExists(OrganizationId)
+        OrganizationActive(OrganizationId)
+        isNotMemberofOrganization(OrganizationId)
+    {
         Organizations[OrganizationId].members.push(msg.sender);
     }
 
-    function revokeMembership(uint OrganizationId, uint memberIndex) public 
+    function revokeMembership(
+        uint OrganizationId,
+        uint memberIndex
+    )
+        public
         OrganizationExists(OrganizationId)
         isMemberofOrganization(OrganizationId)
     {
@@ -210,7 +265,9 @@ contract VotingSystem is Ownable {
         Organizations[OrganizationId].members.pop();
     }
 
-        function getAllVoteCampaign(uint OrganizationId) public view returns(Vote[]){
-            
+    function getAllVoteCampaign(
+        uint OrganizationId
+    ) public view OrganizationExists(OrganizationId) returns (Vote[]) {
+        return Organizations[OrganizationId].votes;
     }
 }
