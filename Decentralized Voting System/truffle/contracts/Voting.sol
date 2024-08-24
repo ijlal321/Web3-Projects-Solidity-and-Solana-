@@ -265,9 +265,15 @@ contract VotingSystem is Ownable {
         Organizations[OrganizationId].members.pop();
     }
 
-    function getAllVoteCampaign(
+    function getAllVoteCampaigns(
         uint OrganizationId
-    ) public view OrganizationExists(OrganizationId) returns (Vote[]) {
+    ) public view OrganizationExists(OrganizationId) returns (Vote[] memory) {
         return Organizations[OrganizationId].votes;
+    }
+
+    function getAllOrganizationMembers(
+        uint OrganizationId
+    ) public view OrganizationExists(OrganizationId) returns (address[] memory) {
+        return Organizations[OrganizationId].members;
     }
 }
