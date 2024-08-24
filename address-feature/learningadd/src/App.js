@@ -162,10 +162,18 @@ function App() {
 
   return (
     <div className="App">
+
+
+
       <h1 style={{ paddingTop: "200px" }}>currently closed {isOpen ? "true" : "false"}</h1>
       <div id="outer-container"
       >
         <select id="fruit" name="fruit"
+          ref={componentRef}
+          onMouseDown={selectMousePress}
+          onClick={selectClickHandle}
+          onBlur={selectBlurHandle}
+          onKeyDown={selectkeyHandle}
         // ref={componentRef}
         // onMouseDown={selectMousePress}
         // onClick={selectClickHandle}
@@ -175,9 +183,6 @@ function App() {
         >
           <option value="apple" >Apple</option>
           <option value="banana">Banana</option>
-          <option value="cherry">Cherry</option>
-          <option value="date">Date</option>
-          <option value="fig">Fig</option>
           <option value="grape">Grape</option>
         </select>
 
@@ -187,14 +192,25 @@ function App() {
           {isOpen && options.map((item, idx) => (
             <p key={idx} style={{ fontSize: "0.95rem" }}>copy</p>
           ))}
+        </div>
         </div> */}
 
       </div>
+      <h3 style={{ paddingTop: "200px" }}>currently closed {isOpen ? "true" : "false"}</h3>
+
+
+
+
+
+
+
+
+
 
       {/* click is basically mouse up after mouse down */}
-      <div> 
-        <button onMouseUp={()=>console.log("mouse up on 1")} onMouseDown={() => console.log("mouse down on 1")} onClick={(event) => console.log("button 1 presses")}>button 1</button>
-        <button onMouseUp={()=>console.log("mouse up on 2")} onMouseDown={() => console.log("mouse down on 2")} onClick={(event) => console.log("button 2 presses")}>button 2</button>
+      <div>
+        <button onMouseUp={() => console.log("mouse up on 1")} onMouseDown={() => console.log("mouse down on 1")} onClick={(event) => console.log("button 1 presses")}>button 1</button>
+        <button onMouseUp={() => console.log("mouse up on 2")} onMouseDown={() => console.log("mouse down on 2")} onClick={(event) => console.log("button 2 presses")}>button 2</button>
       </div>
 
 
