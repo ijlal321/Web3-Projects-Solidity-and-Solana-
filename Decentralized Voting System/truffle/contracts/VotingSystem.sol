@@ -156,6 +156,9 @@ contract VotingSystem is Ownable {
         _;
     }
 
+    event organizationCreated(address indexed organizationOwner, uint organizationId);
+    event voteSubmitted(address indexed candidate, uint voteId, uint OrganizationId, uint option);
+
     function renounceOwnership() public view override onlyOwner {
         revert("ownership rennounce is not allowed");
     }
@@ -166,6 +169,7 @@ contract VotingSystem is Ownable {
         newOrganization.owner = msg.sender;
         newOrganization.id = nextOrgId;
         newOrganization.status = organizationStatus.notApproved;
+        emit organizationCreated(msg.sender, nextOrgId);
         nextOrgId += 1;
         existingOwners[msg.sender] = true;
     }
@@ -183,7 +187,6 @@ contract VotingSystem is Ownable {
         validateNewOptions(options)
         OrganizationActive(OrganizationId)
     {
-        uint256 curVoteIdxs = Organizations[OrganizationId].votes.length;
         Vote memory newVote = Vote(name, block.timestamp, endDate, options);
         Organizations[OrganizationId].votes.push(newVote);
     }
@@ -201,6 +204,7 @@ contract VotingSystem is Ownable {
         validVoteOption(OrganizationId, voteId, optionNr)
     {
         VotesRecord[OrganizationId][voteId][msg.sender] = optionNr;
+        emit voteSubmitted(msg.sender, voteId, OrganizationId, optionNr);
     }
 
     function approveOrganization(
