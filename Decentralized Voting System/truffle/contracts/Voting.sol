@@ -276,4 +276,14 @@ contract VotingSystem is Ownable {
     ) public view OrganizationExists(OrganizationId) returns (address[] memory) {
         return Organizations[OrganizationId].members;
     }
+
+    function getAVoteSubmissions(uint OrganizationId, uint voteId) public view returns(address[] memory, uint[] memory)
+    {
+        address[] memory members = Organizations[OrganizationId].members;
+        uint[] memory res = new uint[](members.length);
+        for (uint i = 0; i < members.length; i++){
+            res[i] =  VotesRecord[OrganizationId][voteId][members[i]];
+        }
+        return (members, res);
+    }
 }
