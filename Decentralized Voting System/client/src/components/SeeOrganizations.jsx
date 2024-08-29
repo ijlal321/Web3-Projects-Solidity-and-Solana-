@@ -3,7 +3,6 @@ import '../styles/SeeOrganizations.css';
 import { useWeb3 } from '../contexts/Web3Context';
 import OrganizationCard from './OrganizationCard';
 
-
 const SeeOrganizations = () => {
     const { VotingContract } = useWeb3();
     const [organizationData, setOrganizationData] = useState([]);
@@ -15,15 +14,23 @@ const SeeOrganizations = () => {
     const loadOrganizationsData = async (start, end) => {
         try {
             setIsLoading(true);
-            // let organizations = [];
-            // for (let i = start; i < end; i++) {
-            //     organizations.push(await VotingContract.methods.Organizations(i).call());
-            // }
-            // setOrganizationData(organizations);
-            setOrganizationData([]);
-            for (let i = start; i < end; i++) {
-                setOrganizationData([...organizationData, await VotingContract.methods.Organizations(i).call()])
+            const nextOrgId = await VotingContract.methods.nextOrgId().call();
+            let organizations = [];
+            for (let i = Math.max(start, 0); i < Math.min(end, nextOrgId); i++) {
+                organizations.push(await VotingContract.methods.Organizations(i).call());
+                const temp = organizations.length - 1;
+
+                if (organizations[temp].status == 0){
+                    organizations[temp].status = 'Not Approved'
+                }
+                else if (organizations[temp].status == 1){
+                    organizations[temp].status = 'Approved'
+                }
+                else{
+                    organizations[temp].status = 'Banned'
+                }
             }
+            setOrganizationData(organizations);
         } catch (error) {
             console.log("Error getting data:", error);
         } finally {
@@ -33,19 +40,21 @@ const SeeOrganizations = () => {
 
     useEffect(() => {
         const loadData = async () => {
-            const nextOrgId = await VotingContract.methods.nextOrgId().call();
-            loadOrganizationsData(0, Math.min(10, nextOrgId));
+            loadOrganizationsData(0, 10);
         };
         loadData();
     }, []);
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
+    const handleSearchClick = (e) => {
+        if (searchTerm == null || searchTerm < 0){
+            alert("enter valid Id");
+            return;
+        }
         loadOrganizationsData(searchTerm, searchTerm + 1);
     };
 
     const handleRangeChange = () => {
-        loadOrganizationsData(startId, endId);
+        loadOrganizationsData(startId, endId+1);
     };
 
     return (
@@ -58,7 +67,7 @@ const SeeOrganizations = () => {
                     onChange={(e)=>setSearchTerm(e.target.value)}
                     className="search-input"
                 />
-                <button onClick={handleRangeChange} className="range-button">Search</button>
+                <button onClick={handleSearchClick} className="search-button range-button">Search</button>
             </div>
             <div className="range-container">
                 <input

@@ -56,3 +56,6 @@
   justify-content: center;
   gap: 1rem;
 }
+.search-button{
+  margin-left: 5px;
+}

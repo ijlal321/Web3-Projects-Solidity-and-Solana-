@@ -1,0 +1,110 @@
+/* CreateVotePage.css */
+.create-vote-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.option-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.option-input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.add-option-button,
+.remove-option-button,
+.submit-button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.add-option-button {
+    background: #28a745;
+}
+
+.remove-option-button {
+    background: #dc3545;
+}
+
+.submit-button {
+    width: 100%;
+}
+
+.errors {
+    margin-top: 20px;
+    padding: 10px;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+}
+
+.error-message {
+    color: #721c24;
+}
+
+.rules {
+    margin-top: 20px;
+    padding: 15px;
+    background: #e2e3e5;
+    border: 1px solid #d6d6d6;
+    border-radius: 4px;
+}
+
+.rules h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.rules ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.rules li {
+    font-size: 14px;
+    color: #333;
+}
+
+.date-picker {
+    height: 40px;
+}

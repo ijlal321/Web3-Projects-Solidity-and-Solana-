@@ -12,6 +12,7 @@ module.exports = {
   },
   resolve: { extensions },
   devServer: {
+    historyApiFallback: true,
     client: {
       overlay: false,
     },
@@ -40,7 +41,7 @@ module.exports = {
     new EslintWebpackPlugin({ extensions }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
-      favicon: "./public/favicon.ico",
+      // favicon: "./public/favicon.ico",
     }),
   ],
   stats: "minimal",
