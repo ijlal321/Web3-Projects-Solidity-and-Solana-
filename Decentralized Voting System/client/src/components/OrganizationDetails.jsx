@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useWeb3 } from '../contexts/Web3Context';
 import '../styles/OrganizationDetails.css';
 
 const OrganizationDetails = () => {
+    const navigate = useNavigate();
     const { VotingContract, accounts } = useWeb3();
     const { id } = useParams();
     const [organization, setOrganization] = useState(null);
@@ -155,6 +157,7 @@ const OrganizationDetails = () => {
                         {organizationCampaigns.map((campaign, index) => (
                             <li key={index} className="campaign-item">
                                 <h3>{campaign.name}</h3>
+                                <h3>Id: {index}</h3>
                                 <p><strong>Options:</strong> {campaign.options.join(', ')}</p>
                                 <p><strong>Start Timing:</strong> {new Date(campaign.startDate * 1000).toLocaleString('en-US', {
                                     year: 'numeric',
@@ -175,6 +178,7 @@ const OrganizationDetails = () => {
                                     second: '2-digit',
                                     hour12: true // Use 12-hour format; set to false for 24-hour format
                                 })}</p>
+                                <button onClick={() => navigate(`/voteDetails/${index}/organization/${id}`) } className="results-button">See Results</button>
                             </li>
                         ))}
                     </ul>

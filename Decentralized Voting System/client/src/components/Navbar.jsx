@@ -12,7 +12,7 @@ const Navbar = () => {
           <li className="navbar-item"><Link to="/organizations" className="navbar-link">See Organizations</Link></li>
           <li className="navbar-item"><Link to="/create-organization" className="navbar-link">Create Organization</Link></li>
           <li className="navbar-item"><Link to="/create-vote" className="navbar-link">Create Vote</Link></li>
-          <li className="navbar-item"><Link to="/submit" className="navbar-link">Submit Vote</Link></li>
+          <li className="navbar-item"><Link to="/search-vote" className="navbar-link">Submit Vote</Link></li>
         </ul>
       </div>
     </nav>

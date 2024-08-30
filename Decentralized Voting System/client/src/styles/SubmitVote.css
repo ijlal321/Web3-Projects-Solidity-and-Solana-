@@ -1,0 +1,111 @@
+.submit-vote {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    position: relative;
+}
+
+.vote-details {
+    margin-bottom: 20px;
+}
+
+.vote-details h1 {
+    margin-top: 0;
+    color: #333;
+}
+
+.vote-details p {
+    margin: 5px 0;
+}
+
+.vote-form {
+    margin-bottom: 20px;
+}
+
+.options {
+    margin-bottom: 10px;
+}
+
+.options label {
+    font-weight: bold;
+}
+
+.options select {
+    margin-left: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.submit-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+.vote-summary {
+    margin-top: 20px;
+}
+
+.vote-summary h2 {
+    margin-top: 0;
+}
+
+.vote-summary ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.vote-summary li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.transaction-status {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    width: 80%;
+}
+
+.transaction-status p {
+    margin: 0;
+}
+
+.transaction-status.processing {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.transaction-status.success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.transaction-status.error {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.loading-message {
+    font-size: 18px;
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+}

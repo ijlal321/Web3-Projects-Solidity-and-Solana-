@@ -1,0 +1,35 @@
+.home {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .home-header {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  .home-features, .home-how-it-works {
+    margin: 20px 0;
+  }
+  
+  .home-features ul, .home-how-it-works ol {
+    text-align: left;
+    display: inline-block;
+    margin: 0 auto;
+  }
+  
+  .home-footer {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  
+  .home-footer a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .home-footer a:hover {
+    text-decoration: underline;
+  }
+  
