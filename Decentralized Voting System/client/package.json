@@ -2,9 +2,12 @@
   "name": "truffle-client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://ijlal321.github.io/Web3-Projects-Solidity-and-Solana-/Decentralized%20Voting%20System/client",
   "scripts": {
     "build": "webpack",
-    "start": "webpack serve"
+    "start": "webpack serve",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -20,6 +23,7 @@
     "eslint": "^8.34.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-webpack-plugin": "^4.0.0",
+    "gh-pages": "^6.1.1",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.75.0",
