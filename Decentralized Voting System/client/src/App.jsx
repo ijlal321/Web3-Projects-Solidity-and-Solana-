@@ -24,6 +24,7 @@ function App() {
             <Route path="/create-vote" element={<CreateVoteCampaign />} />
             <Route path="/search-vote" element={<SearchVotePage />} />
             <Route path="/voteDetails/:index/organization/:id" element={<SubmitVote />} />
+            <Route path="*" element={<Home />} />
           </Routes>
         </Router>
       </div>
