@@ -1,39 +1,56 @@
-# React Truffle Box
+# Private Auction with Commitments
 
-This box comes with everything you need to start using Truffle to write, compile, test, and deploy smart contracts, and interact with them from a React app.
+This project implements a **private auction system** using commit schemes to ensure that bids are hidden during the bidding phase, allowing for a completely secure and private bidding process. The auction utilizes a **commit-reveal scheme** where participants submit commitments that conceal their bids, which are only revealed at the end of the auction.
 
-## Installation
+## Table of Contents
+- [Deployment and Demo](#deployment-and-demo)
+  - [Smart Contract Deployment Address](#smart-contract-deployment-address)
+  - [YouTube Demo](#youtube-demo)
+  - [Live Application](#live-application)
+- [How It Works](#how-it-works)
+- [Features](#features)
+- [Getting Started](#getting-started)
 
-First ensure you are in an empty directory.
+## Deployment and Demo
 
-Run the `unbox` command using 1 of 2 ways.
+### Smart Contract Deployment Address
+The auction smart contract is deployed on the Sepolia testnet at:  
+[0xe3f4d3706eA9fD0DBaB51415FCd21b7c0dB8F729](https://sepolia.etherscan.io/address/0xe3f4d3706eA9fD0DBaB51415FCd21b7c0dB8F729)
 
-```sh
-# Install Truffle globally and run `truffle unbox`
-$ npm install -g truffle
-$ truffle unbox react
-```
+### YouTube Demo
+Watch the [demo on YouTube](https://youtu.be/uetRXBQVfWo) to understand how the system works.
 
-```sh
-# Alternatively, run `truffle unbox` via npx
-$ npx truffle unbox react
-```
+### Live Application
+Try the live version of the app [here](https://ijlal321.github.io/Web3-Projects-Solidity-and-Solana-/Private%20Auction%20with%20Commitments/client/privateAuction/dist/).
 
-Start the react dev server.
+## How It Works
 
-```sh
-$ cd client
-$ npm start
-```
+1. **Create Auction**:
+   - Users can create a new auction, which remains open for bidding for **2 minutes**.
+   
+2. **Commit Phase**:
+   - During the bidding phase, participants place a hidden bid by providing two inputs:
+     - **Bid Amount**.
+     - **Random Number** (used to make the bid secret).
+   - The bid is then **committed** to the smart contract using a cryptographic hash of the bid amount and random number. This ensures no one can know the actual bid until the reveal phase.
 
-From there, follow the instructions on the hosted React app. It will walk you through using Truffle and Ganache to deploy the `SimpleStorage` contract, making calls to it, and sending transactions to change the contract's state.
+3. **Reveal Phase**:
+   - After the bidding phase ends, the reveal phase begins.
+   - Participants must **reveal** their bid by submitting the original **bid amount** and **random number** used during the commit phase.
+   - The smart contract validates the bid by checking if the revealed bid and random number match the previously committed hash. If valid, the bid is stored on the blockchain.
 
-## FAQ
+4. **Private Bidding**:
+   - During the commit phase, all bids are kept private, and participants can only see the bids after the reveal phase is completed.
 
-- __How do I use this with Ganache (or any other network)?__
+## Features
 
-  The Truffle project is set to deploy to Ganache by default. If you'd like to change this, it's as easy as modifying the Truffle config file! Check out [our documentation on adding network configurations](https://trufflesuite.com/docs/truffle/reference/configuration/#networks). From there, you can run `truffle migrate` pointed to another network, restart the React dev server, and see the change take place.
+- **Private Commitments**: Bids are kept hidden using cryptographic commitments until the reveal phase.
+- **Automatic Validation**: The smart contract automatically checks if the revealed bids match the commitments.
+- **Timed Phases**: The auction has strict timing for the bidding and reveal phases, ensuring fairness and transparency.
 
-- __Where can I find more resources?__
+## Getting Started
 
-  This Box is a sweet combo of [Truffle](https://trufflesuite.com) and [Webpack](https://webpack.js.org). Either one would be a great place to start!
+- To start a new auction, simply visit the live app, create an auction, and place your bid.
+- Make sure to note your random number, as it will be required during the reveal phase.
+
+This auction system brings complete privacy and transparency to the bidding process by ensuring no one can see or manipulate the bids before they are revealed.
