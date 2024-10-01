@@ -39,8 +39,12 @@ contract BiddingSystem {
     }
 
     function createVote(string calldata _name) external noBidActive() {
-        curAuction = Auction(_name, block.timestamp, block.timestamp + 120);
-
+        // curAuction = Auction(_name, block.timestamp, block.timestamp + 120);
+        curAuction = Auction({
+            name: _name,
+            startDate: block.timestamp,
+            endDate: block.timestamp + 120
+        });
         for (uint256 i = 0; i < Bidders.length; i++) {
             delete biddingRecord[Bidders[i]];
         }
@@ -61,6 +65,20 @@ contract BiddingSystem {
     function getHash(uint _amount, int _randomNumber) pure public returns(bytes32){
         bytes memory combined = abi.encodePacked(RANDOM_NUMBER, _amount, _randomNumber);
         return keccak256(combined);
+    }
+
+    function getAllBids() view external returns(address[] memory, uint[] memory){
+        uint[] memory _amounts = new uint[](Bidders.length);
+
+        for(uint i = 0; i < Bidders.length; i++){
+            _amounts[i] = biddingRecord[Bidders[i]].value;
+        }
+
+        return (Bidders, _amounts);
+    }
+
+    function getLastAuctionEndDate() view external returns (uint){
+        return curAuction.endDate;
     }
 
 }

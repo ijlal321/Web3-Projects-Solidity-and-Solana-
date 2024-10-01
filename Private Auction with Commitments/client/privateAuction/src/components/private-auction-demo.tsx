@@ -25,6 +25,37 @@ const contractABI = [
   {
     "inputs": [
       {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      }
+    ],
+    "name": "createVote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "int256",
+        "name": "_randomNumber",
+        "type": "int256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
+      }
+    ],
+    "name": "revealBid",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -47,19 +78,6 @@ const contractABI = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
-      }
-    ],
-    "name": "createVote",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "curAuction",
     "outputs": [
@@ -77,6 +95,24 @@ const contractABI = [
         "internalType": "uint256",
         "name": "endDate",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllBids",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
       }
     ],
     "stateMutability": "view",
@@ -107,27 +143,22 @@ const contractABI = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "int256",
-        "name": "_randomNumber",
-        "type": "int256"
-      },
+    "inputs": [],
+    "name": "getLastAuctionEndDate",
+    "outputs": [
       {
         "internalType": "uint256",
-        "name": "_value",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "revealBid",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   }
 ]
 
-const contractAddress = '0xD49fD29D7f659205A08f4eB46C8F6C0d16ceE80C'; // Replace with your contract's address
-
+const contractAddress = '0xe3f4d3706eA9fD0DBaB51415FCd21b7c0dB8F729';
+// const contractAddress = '0x524C15b36dCa4d240412ed2d40fA06484097490c';
 
 // Placeholder functions for blockchain interactions
 
@@ -156,13 +187,55 @@ export default function PrivateAuctionDemoComponent() {
         // Initialize the contract
         const instance = new web3.eth.Contract(contractABI, contractAddress);
         setContract(instance);
+        findCurPhase(instance);
       } else {
         alert('Please install MetaMask to use this app');
       }
     };
 
+    const findCurPhase = async (instance) => {
+      try {
+        const endTime = Number(await instance.methods.getLastAuctionEndDate().call());
+        const currentTimeUnix = Math.floor(Date.now() / 1000);
+        console.log(endTime - currentTimeUnix)
+        if (currentTimeUnix < endTime) {  // bid time
+          setAuctionActive(true)
+          setTimeLeft(endTime - currentTimeUnix) // 10 minutes for bidding phase
+          setPhase('bid')
+        }
+        else if (currentTimeUnix < endTime + 120){
+          setAuctionActive(true)
+          setPhase('reveal')
+          setTimeLeft(endTime + 120 - currentTimeUnix)
+        }
+        else{
+          setPhase('ended')
+          setAuctionActive(false)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     initWeb3();
   }, []);
+
+
+  useEffect(() => {
+    if (auctionActive && timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000)
+      return () => clearTimeout(timer)
+    } else if (timeLeft === 0) {
+      if (phase === 'bid') {
+        setPhase('reveal')
+        setTimeLeft(120)
+      } else if (phase === 'reveal') {
+        setPhase('ended')
+        setAuctionActive(false)
+        fetchResults()
+      }
+    }
+  }, [auctionActive, timeLeft, phase])
 
   const createAuction = async (name: string) => {
 
@@ -176,6 +249,7 @@ export default function PrivateAuctionDemoComponent() {
       return { success: false }
     }
   }
+
   const submitBid = async (amount: number, randomValue: number) => {
     try {
       const newHash = await contract.methods.getHash(amount, randomValue).call();
@@ -185,47 +259,46 @@ export default function PrivateAuctionDemoComponent() {
       return { commitHash: 'Transaction Falied fue to error: ' + error }
     }
   }
+
   const revealBid = async (amount: number, randomValue: number) => {
-    
+
     try {
-      await contract.methods.revealBid(randomValue, amount).send({from:account});
+      await contract.methods.revealBid(randomValue, amount).send({ from: account });
       return { success: true }
     } catch (error) {
       return { success: false }
     }
   }
 
-  
   const getAuctionResults = async () => {
-    
-    const data = {};
+
+    const data = [];
     try {
-      const result = await contract.methods.revealBid(randomValue, amount).call();
-    } catch (error) {
-      
-    }
-
-
-    return[
-    { address: '0x123...', amount: 100 },
-    { address: '0x456...', amount: 150 },
-  ]}
-
-  useEffect(() => {
-    if (auctionActive && timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000)
-      return () => clearTimeout(timer)
-    } else if (timeLeft === 0) {
-      if (phase === 'bid') {
-        setPhase('reveal')
-        setTimeLeft(300) // 5 minutes for reveal phase
-      } else if (phase === 'reveal') {
-        setPhase('ended')
-        setAuctionActive(false)
-        fetchResults()
+      const result = await contract.methods.getAllBids().call();
+      // console.log(result);
+      for (var i = 0; i < result[0].length; i++) {
+        data.push(
+          {
+            address: result[0][i].slice(0, 5) + "...",
+            amount: Number(result[1][i])
+          }
+        )
       }
+      console.log(data);
+
+    } catch (error) {
+      console.log(error)
+
     }
-  }, [auctionActive, timeLeft, phase])
+
+    return data;
+
+    // sample return data
+    //   return[
+    //   { address: '0x123...', amount: 100 },
+    //   { address: '0x456...', amount: 150 },
+    // ]
+  }
 
   const startAuction = async () => {
     const result = await createAuction(auctionName)
@@ -287,6 +360,7 @@ export default function PrivateAuctionDemoComponent() {
                   onChange={(e) => setRandomValue(e.target.value)}
                 />
                 <Button onClick={handleBid} className="w-full">Submit Bid</Button>
+                <Button onClick={fetchResults} className="w-full">View Last Auction Results</Button>
                 {commitHash && (
                   <div className="text-sm">
                     Commit Hash: {commitHash}
@@ -311,6 +385,7 @@ export default function PrivateAuctionDemoComponent() {
                   onChange={(e) => setRandomValue(e.target.value)}
                 />
                 <Button onClick={handleReveal} className="w-full">Reveal Bid</Button>
+                <Button onClick={fetchResults} className="w-full">View Last Auction Results</Button>
               </>
             )}
           </div>
