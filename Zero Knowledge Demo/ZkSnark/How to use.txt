@@ -1,0 +1,6 @@
+use 
+do npm i
+
+
+do 
+node trustedSetup.js 
